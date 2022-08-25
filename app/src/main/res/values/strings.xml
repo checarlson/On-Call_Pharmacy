@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">On-Call Pharmacy</string>
+
+    <string name="back4app_server_url" translatable="false">https://parseapi.back4app.com/</string>
+
+    <!-- Change BOTH strings as required -->
+    <string name="back4app_app_id" translatable="false">jIz5VPXkZDRhw4wVslrL7kxsAstvdPwIF0zyB2LD</string>
+    <string name="back4app_client_key" translatable="false">kCQrFBQfgQ2aFRM7wH2Rz7jjmmsgfvFfqfSbdh9O</string>
+
+    <string name="api_key" translatable="false">AIzaSyBrnsFXKX7uTNbvBz48pJu4omn557Ix9Xc</string>
+
+
+</resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/idCVLeagueItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="4dp">
+
+        <LinearLayout
+            android:id="@+id/idLeagues"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="134dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="pharmacy name"
+                    android:textSize="14dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/pharmaImage"
+                    android:layout_width="88dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_launcher_background"
+                    tools:ignore="VectorDrawableCompat" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="distance"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/open_close"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="open/closed"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See Map"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@drawable/ic_baseline_directions_24"
+                    android:background="@drawable/button_background"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

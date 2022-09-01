@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +63,7 @@ public class PharmacyRVAdapter extends RecyclerView.Adapter<PharmacyRVAdapter.Vi
             }
         });
 
+/*
         holder.map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +76,17 @@ public class PharmacyRVAdapter extends RecyclerView.Adapter<PharmacyRVAdapter.Vi
                 ((Activity)context).finish();
             }
         });
+*/
 
+        holder.map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://www.google.com/maps/dir/?api=1&destination="+Utility.pharmLat + "," + Utility.pharmLong + "&travelmode=driving";
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                context.startActivity(intent);
+                ((Activity)context).finish();
+            }
+        });
     }
 
     @Override

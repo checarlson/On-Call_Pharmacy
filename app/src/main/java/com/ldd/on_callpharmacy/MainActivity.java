@@ -17,7 +17,10 @@ import android.os.Looper;
 import android.os.ResultReceiver;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private double longitude, latitude;
     private String locality;
     private TextView myLocality, error;
+    private EditText search;
 
     private ResultReceiver resultReceiver;
     private static final int REQUEST_PERMISSION_CODE = 1;
@@ -103,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id.refreshLayout);
         myLocality = findViewById(R.id.locality);
         error = findViewById(R.id.error);
+        search = findViewById(R.id.search);
 
         if (!internetIsConnected()){
             error.setText("No internet connection found!!\nCheck your connection and refresh again.");
@@ -113,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
 //        getLocation();
         preparePharmacyRV();
 
-        getDataFromServer();
+      getDataFromServer(locality);
+
+        searchTown();
 
         swipe();
 
@@ -135,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getDataFromServer() {
+    private void getDataFromServer(String locality) {
         pharmacyArrayList.clear();
 
         // Configure Query with our query.
@@ -161,9 +168,13 @@ public class MainActivity extends AppCompatActivity {
 
                         double lat2 = Double.parseDouble(lati);
                         double long2 = Double.parseDouble(longi);
+                        Utility.pharmLat = lat2;
+                        Utility.pharmLong = long2;
 
 
                         double distance = distance(latitude, lat2, longitude, long2);
+                        double dist = distance1(latitude,longitude, lat2, long2);
+                        dist = dist/0.62137;
 
                         LatLng myLocation = new LatLng(latitude, longitude);
                         LatLng pharmLocation = new LatLng(lat2, long2);
@@ -174,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                         dis = dis / 1000;
 
                         // on below line we are adding data to our array list.
-                        pharmacyArrayList.add(new Pharmacy(logo, name, dis, "open", myLocation, pharmLocation));
+                        pharmacyArrayList.add(new Pharmacy(logo, name, dist, "open", myLocation, pharmLocation));
 
                         //sort by distance
                         Collections.sort(pharmacyArrayList, Pharmacy.sortbydistance);
@@ -189,6 +200,34 @@ public class MainActivity extends AppCompatActivity {
                     loadingPB.setVisibility(View.GONE);
                     error.setText("-Either your location is not turn on. Or\n-Internet is not available\n\nCheck the above and try again. Thanks");
                 }
+            }
+        });
+    }
+
+    public void searchTown(){
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                getDataFromServer(locality);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                if (s.length() > 0){
+                    String town = search.getText().toString();
+                    myLocality.setText(town);
+                    getDataFromServer(town);
+                }else {
+                    myLocality.setText(locality);
+                    getDataFromServer(locality);
+                }
+
             }
         });
     }
@@ -289,6 +328,27 @@ public class MainActivity extends AppCompatActivity {
         return Math.sqrt(distance);
     }
 
+    private double distance1(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+    }
+
     private void swipe(){
         // Refresh  the layout
         swipeRefreshLayout.setOnRefreshListener(
@@ -298,7 +358,8 @@ public class MainActivity extends AppCompatActivity {
 
                         // Your code goes here
 
-                        getDataFromServer();
+                       // getDataFromServer();
+                        searchTown();
                         preparePharmacyRV();
 //                        getLocation();
                         getMyLocation();

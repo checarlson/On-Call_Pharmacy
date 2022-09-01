@@ -1,16 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.ldd.on_callpharmacy"
         minSdk 19
-        targetSdk 31
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -44,5 +45,7 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.4'
 
     implementation 'com.github.jd-alexander:library:1.1.0'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 
 }
